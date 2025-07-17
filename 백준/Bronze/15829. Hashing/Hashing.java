@@ -3,17 +3,21 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        final int M = 1234567891;
+        final int r = 31;
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
         int L = Integer.parseInt(br.readLine());
         String str = br.readLine();
         
-        int answer = 0;
-        int digit = 0;
+        long answer = 0;
+        long pow = 1;
         for (char ch : str.toCharArray()) {
-            answer += (ch - 96) * Math.pow(31, digit++);
+            answer = (answer + (ch - 'a' + 1) * pow % M) % M;
+            pow = pow * r % M;
         }
         
-        System.out.println((int) (answer % 1234567891));
+        System.out.println(answer);
     }
 }
