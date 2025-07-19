@@ -24,32 +24,22 @@ public class Solution {
             }
             
             int[][] deg90Matrix = new int[n][n];
-            for (int i = 0; i < n; ++i) { // matrix rotate
-                for (int j = n - 1; j >= 0; --j) {
-                    deg90Matrix[j][n - 1 - i] = matrix[i][j];
-                }
-            }
+            rotate(matrix, deg90Matrix, n);
             
             int[][] deg180Matrix = new int[n][n];
-            for (int i = 0; i < n; ++i) { // matrix rotate
-                for (int j = n - 1; j >= 0; --j) {
-                    deg180Matrix[j][n - 1 - i] = deg90Matrix[i][j];
-                }
-            }
+            rotate(deg90Matrix, deg180Matrix, n);
             
             int[][] deg270Matrix = new int[n][n];
-            for (int i = 0; i < n; ++i) { // matrix rotate
-                for (int j = n - 1; j >= 0; --j) {
-                    deg270Matrix[j][n - 1 - i] = deg180Matrix[i][j];
-                }
-            }
+            rotate(deg180Matrix, deg270Matrix, n);
             
             sb = new StringBuilder();
             
             if (testCase != 1) {
                 sb.append('\n');
             }
+            
             sb.append('#').append(testCase);
+            
             for (int i = 0; i < n; ++i) {
                 sb.append('\n');
                 
@@ -75,5 +65,13 @@ public class Solution {
         
         bw.flush();
         bw.close();
+    }
+    
+    public static void rotate(int[][] matrix, int[][] newMatrix, int length) {
+        for (int i = 0; i < length; ++i) { // matrix rotate
+            for (int j = length - 1; j >= 0; --j) {
+                newMatrix[j][length - 1 - i] = matrix[i][j];
+            }
+        }
     }
 }
