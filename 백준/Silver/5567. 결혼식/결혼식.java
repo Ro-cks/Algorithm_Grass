@@ -7,52 +7,52 @@ public class Main {
 	
 	static int N;
 	static int M;
-	static int L = 2;
+	static int answer;
+	static final int L = 2;
 	static boolean[] visited;
-	static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+	static ArrayList<Integer>[] list;
 	
 	public static void main(String[] args) throws IOException {
 		N = Integer.parseInt(br.readLine());
 		M = Integer.parseInt(br.readLine());
 		
+		visited = new boolean[N + 1];
+		list = new ArrayList[N + 1];
+		
 		for (int i = 0; i <= N; ++i) {
-			graph.add(new ArrayList<Integer>());
+			list[i] = new ArrayList<>();
 		}
 		
-		visited = new boolean[N + 1];
-		
-		for (int i = 0; i < M; ++i) {
+		while (M-- > 0) {
 			st = new StringTokenizer(br.readLine());
 			
 			int from = Integer.parseInt(st.nextToken());
 			int to = Integer.parseInt(st.nextToken());
 			
-			graph.get(from).add(to);
-			graph.get(to).add(from);
+			list[from].add(to);
+			list[to].add(from);
 		}
 		
 		dfs(0, 1);
 		
-		int answer = 0;
-		
 		for (int i = 2; i < visited.length; ++i) {
-            if (visited[i]) {
-                ++answer;
-            }
-        }
+			if (visited[i]) {
+				++answer;
+			}
+		}
 		
 		System.out.print(answer);
 	}
 	
-	public static void dfs(int depth, int point) {
-		if (depth == 2) {
+	static void dfs(int depth, int start) {
+		if (depth == L) {
 			
 			return;
 		}
 		
-		for (int i : graph.get(point)) {
-			visited[i] = true;
-			dfs(depth + 1, i);
+		for (int num : list[start]) {			
+			visited[num] = true;
+			dfs(depth + 1, num);
 		}
 	}
 }
