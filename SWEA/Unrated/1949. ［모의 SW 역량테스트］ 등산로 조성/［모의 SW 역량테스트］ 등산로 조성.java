@@ -6,30 +6,27 @@ public class Solution {
 	static StringBuilder sb = new StringBuilder();
 	static StringTokenizer st;
 	
+	static int[][] dirs = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+	
 	static int T;
 	static int N;
 	static int K;
-	static int top = 0;
+	static int top;
 	static int answer;
 	static int[][] map;
+	static List<int[]> tops;
 	static boolean[][] visited;
 	
-	static int[][] dirs = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
-	
 	public static void main(String[] args) throws IOException {
-		T = Integer.parseInt(br.readLine());
+		T = Integer.parseInt(br.readLine().trim());
 		
 		for (int tc = 1; tc <= T; ++tc) {
 			init();
 			
-			for (int i = 0; i < N; ++i) {
-				for (int j = 0; j < N; ++j) {
-					if (map[i][j] == top) {
-						visited[i][j] = true;
-						dfs(i, j, 1, false);
-						visited[i][j] = false;
-					}
-				}
+			for (int[] top : tops) {
+				visited[top[0]][top[1]] = true;
+				solution(top[0], top[1], 1, false);
+				visited[top[0]][top[1]] = false;
 			}
 			
 			sb.append('#').append(tc).append(' ').append(answer).append('\n');
@@ -38,50 +35,56 @@ public class Solution {
 		System.out.print(sb);
 	}
 	
-	/* bfs(): 사방탐색, 높이가 낮은 곳으로만 이동 가능
-	 * 시작 위치를 제외한 모든 곳을 한 번씩 -K 한 이후 탐색
-	 * 탐색이 끝나면 원복
-	 * */
-	static void dfs(int x, int y, int len, boolean cutUsed) {
+	static void solution(int r, int c, int len, boolean cut) {
 		answer = Math.max(answer, len);
 		
 		for (int[] dir : dirs) {
-			int nx = x + dir[0];
-			int ny = y + dir[1];
+			int nr = r + dir[0];
+			int nc = c + dir[1];
 			
-			if (nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-			if (visited[nx][ny]) continue;
+			if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+			if (visited[nr][nc]) continue;
 			
-			if (map[nx][ny] < map[x][y]) {
-				visited[nx][ny] = true;
-				dfs(nx, ny, len + 1, cutUsed);
-				visited[nx][ny] = false;
-			} else if (!cutUsed && map[nx][ny] - K < map[x][y]) {
-				int original = map[nx][ny];
-				map[nx][ny] = map[x][y] - 1;
+			if (map[r][c] > map[nr][nc]) {
+				visited[nr][nc] = true;
+				solution(nr, nc, len + 1, cut);
+				visited[nr][nc] = false;
+			} else if (!cut && map[r][c] > map[nr][nc] - K) {
+				int original = map[nr][nc];
+				map[nr][nc] = map[r][c] - 1;
 				
-				visited[nx][ny] = true;
-				dfs(nx, ny, len + 1, true);
-				visited[nx][ny] = false;
-				map[nx][ny] = original;
+				visited[nr][nc] = true;
+				solution(nr, nc, len + 1, true);
+				visited[nr][nc] = false;
+				map[nr][nc] = original;
 			}
 		}
 	}
 	
 	static void init() throws IOException {
-		st = new StringTokenizer(br.readLine());
+		st = new StringTokenizer(br.readLine().trim());
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
-		answer = Integer.MIN_VALUE;
 		top = 0;
-		
+		answer = 0;
+		tops = new ArrayList<>();
 		visited = new boolean[N][N];
+		
 		map = new int[N][N];
 		for (int i = 0; i < N; ++i) {
-			st = new StringTokenizer(br.readLine());
+			st = new StringTokenizer(br.readLine().trim());
 			for (int j = 0; j < N; ++j) {
+				
 				map[i][j] = Integer.parseInt(st.nextToken());
 				top = Math.max(top, map[i][j]);
+			}
+		}
+		
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < N; ++j) {
+				if (map[i][j] == top) {
+					tops.add(new int[] {i, j});
+				}
 			}
 		}
 	}
