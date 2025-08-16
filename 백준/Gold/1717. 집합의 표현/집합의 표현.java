@@ -32,34 +32,30 @@ public class Main {
 					union(a, b);
 					break;
 				default:
-					find(a, b);
+					if (find(a) == find(b)) sb.append(YES).append('\n');
+					else sb.append(NO).append('\n');
 			}
 		}
 		
 		System.out.print(sb);
 	}
 	
-	static int DFS(int start) {
+	static int find(int start) {
 		if (sets[start] == start) {
 			
 			return start;
 		}
-        
-		return DFS(sets[start]);
+		
+		return find(sets[start]);
 	}
 	
 	static void union(int a, int b) {
-		int setA = DFS(a);
-		int setB = DFS(b);
+		int setA = find(a);
+		int setB = find(b);
 		
 		int repreSet = setA <= setB ? setA : setB;
 		
 		sets[setB] = setA;
-	}
-	
-	static void find(int a, int b) {
-		if (DFS(a) == DFS(b)) sb.append(YES).append('\n');
-		else sb.append(NO).append('\n');
 	}
 	
 	static void init() throws IOException {
