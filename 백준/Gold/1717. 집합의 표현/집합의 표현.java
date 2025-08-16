@@ -46,7 +46,7 @@ public class Main {
 			return start;
 		}
 		
-		return find(sets[start]);
+		return sets[start] = find(sets[start]);
 	}
 	
 	static void union(int a, int b) {
