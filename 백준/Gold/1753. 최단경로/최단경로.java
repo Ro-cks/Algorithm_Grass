@@ -10,7 +10,6 @@ public class Main {
 	static int E;
 	static int start;
 	static int[] dist;
-	static boolean[] visited;
 	static List<Node>[] graph;
 	
 	private static class Node {
@@ -48,12 +47,10 @@ public class Main {
 		while (!pq.isEmpty()) {
 			Node now = pq.poll();
 			
-			if (visited[now.num]) {
+			if (now.cost > dist[now.num]) {
 				
 				continue;
 			}
-			
-			visited[now.num] = true;
 			
 			for (Node next : graph[now.num]) {				
 				if (dist[next.num] > now.cost + next.cost) {
@@ -73,7 +70,6 @@ public class Main {
 		start = Integer.parseInt(br.readLine().trim());
 		
 		dist = new int[V + 1];
-		visited = new boolean[V + 1];
 		
 		graph = new ArrayList[V + 1];
 		for (int i = 0; i <= V; ++i) {
