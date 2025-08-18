@@ -19,7 +19,7 @@ public class Solution {
 		for (int tc = 1; tc <= T; ++tc) {
 			init();
 			
-			perm(0);
+			solution();
 			
 			sb.append('#').append(tc).append(' ').append(answer).append('\n');
 		}
@@ -27,9 +27,13 @@ public class Solution {
 		System.out.print(sb);
 	}
 	
+	static void solution() {
+		perm(0);
+	}
+	
 	static void perm(int depth) {
 		if (depth == N) {
-			solution(0, 0, 0);
+			subs(0, 0, 0);
 			
 			return;
 		}
@@ -44,7 +48,7 @@ public class Solution {
 		}
 	}
 	
-	static void solution(int depth, int left, int right) {
+	static void subs(int depth, int left, int right) {
 		if (left < right) return;
 		
 		if (depth == N) {
@@ -53,19 +57,18 @@ public class Solution {
 			return;
 		}
 		
-		solution(depth + 1, left + sequence[depth], right);
-		solution(depth + 1, left, right + sequence[depth]);
+		subs(depth + 1, left + sequence[depth], right);
+		subs(depth + 1, left, right + sequence[depth]);
 	}
 	
 	static void init() throws IOException {
 		N = Integer.parseInt(br.readLine().trim());
-		st = new StringTokenizer(br.readLine().trim());
-		
-		answer = 0;
+		weights = new int[N];
 		sequence = new int[N];
 		visited = new boolean[N];
+		answer = 0;
 		
-		weights = new int[N];
+		st = new StringTokenizer(br.readLine().trim());
 		for (int i = 0; i < N; ++i) {
 			weights[i] = Integer.parseInt(st.nextToken());
 		}
