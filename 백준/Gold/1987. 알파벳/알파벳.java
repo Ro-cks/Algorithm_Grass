@@ -11,7 +11,8 @@ public class Main {
 	static char[][] board;
 	static boolean[] visited = new boolean[26];
 	
-	static int[][] dirs = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+	static final int[] dr = {-1, 1, 0, 0};
+    static final int[] dc = {0, 0, -1, 1};
 	
 	public static void main(String[] args) throws IOException {
 		init();
@@ -29,12 +30,9 @@ public class Main {
 	static void DFS(int r, int c, int count) {
 		answer = Math.max(answer, count);
 		
-		int cr = r;
-		int cc = c;
-		
-		for (int[] dir : dirs) {
-			int nr = cr + dir[0];
-			int nc = cc + dir[1];
+		for (int d = 0; d < 4; ++d) {
+			int nr = r + dr[d];
+			int nc = c + dc[d];
 			
 			if (nr < 0 || nr >= R || nc < 0 || nc >= C) {
 				
