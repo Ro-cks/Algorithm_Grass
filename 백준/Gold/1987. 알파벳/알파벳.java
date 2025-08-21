@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	
+	static int R;
+	static int C;
+	static int answer;
+	static char[][] board;
+	static boolean[] visited = new boolean[26];
+	
+	static int[][] dirs = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+	
+	public static void main(String[] args) throws IOException {
+		init();
+		
+		solution();
+		
+		System.out.print(answer);
+	}
+	
+	static void solution() {
+		visited[board[0][0] - 'A'] = true;
+		DFS(new int[] {0, 0}, 1);
+	}
+	
+	static void DFS(int[] curr, int count) {
+		answer = Math.max(answer, count);
+		
+		int cr = curr[0];
+		int cc = curr[1];
+		
+		for (int[] dir : dirs) {
+			int nr = cr + dir[0];
+			int nc = cc + dir[1];
+			
+			if (nr < 0 || nr >= R || nc < 0 || nc >= C) {
+				
+				continue;
+			}
+			
+			if (visited[board[nr][nc] - 'A']) {
+				
+				continue;
+			}
+
+			visited[board[nr][nc] - 'A'] = true;
+			DFS(new int[] {nr, nc}, count + 1);
+			visited[board[nr][nc] - 'A'] = false;
+		}
+	}
+	
+	static void init() throws IOException {
+		st = new StringTokenizer(br.readLine().trim());
+		R = Integer.parseInt(st.nextToken());
+		C = Integer.parseInt(st.nextToken());
+		answer = Integer.MIN_VALUE;
+		
+		board = new char[R][C];
+		for (int r = 0; r < R; ++r) {
+			String input = br.readLine();
+			
+			for (int c = 0; c < C; ++c) {
+				board[r][c] = input.charAt(c);
+			}
+		}
+	}
+}
