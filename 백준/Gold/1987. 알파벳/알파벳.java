@@ -23,14 +23,14 @@ public class Main {
 	
 	static void solution() {
 		visited[board[0][0] - 'A'] = true;
-		DFS(new int[] {0, 0}, 1);
+		DFS(0, 0, 1);
 	}
 	
-	static void DFS(int[] curr, int count) {
+	static void DFS(int r, int c, int count) {
 		answer = Math.max(answer, count);
 		
-		int cr = curr[0];
-		int cc = curr[1];
+		int cr = r;
+		int cc = c;
 		
 		for (int[] dir : dirs) {
 			int nr = cr + dir[0];
@@ -47,7 +47,7 @@ public class Main {
 			}
 
 			visited[board[nr][nc] - 'A'] = true;
-			DFS(new int[] {nr, nc}, count + 1);
+			DFS(nr, nc, count + 1);
 			visited[board[nr][nc] - 'A'] = false;
 		}
 	}
