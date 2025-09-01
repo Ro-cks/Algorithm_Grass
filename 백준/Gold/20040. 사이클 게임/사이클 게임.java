@@ -8,44 +8,50 @@ public class Main {
 	
 	static int n;
 	static int m;
+	static int answer;
 	static int[] sets;
 	
 	public static void main(String[] args) throws IOException {
 		init();
 		
 		solution();
+		
+		System.out.print(answer);
 	}
 	
 	static void solution() throws IOException {
-		int count = 1;
+		boolean isCycle = false;
 		
 		for (int i = 0; i < m; ++i) {
 			st = new StringTokenizer(br.readLine().trim());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			
-			if (!union(a, b) && count >= 3) {
-				System.out.print(count);
-				System.exit(0);
+			if (union(a, b)) {
+				++answer;
+			} else {
+				++answer;
+				
+				return;
 			}
-			
-			++count;
 		}
 		
-		System.out.print(0);
+		if (!isCycle) {
+			answer = 0;
+		}
 	}
 	
 	static boolean union(int a, int b) {
-		int parentA = find(a);
-		int parentB = find(b);
+		int pa = find(a);
+		int pb = find(b);
 		
-		if (parentA == parentB) {
+		if (pa == pb) {
 			
 			return false;
-		} else if (parentA > parentB) {
-			sets[parentA] = parentB;
+		} else if (pa < pb) {
+			sets[pb] = pa;
 		} else {
-			sets[parentB] = parentA;
+			sets[pa] = pb;
 		}
 		
 		return true;
@@ -64,6 +70,8 @@ public class Main {
 		st = new StringTokenizer(br.readLine().trim());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
+		answer = 0;
+		
 		sets = new int[n];
 		for (int i = 0; i < n; ++i) {
 			sets[i] = i;
