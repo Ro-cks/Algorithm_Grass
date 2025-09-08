@@ -55,7 +55,6 @@ public class Solution {
         M = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        // 배열들 초기화
         pq = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.life, o2.life) * -1);
         map = new int[MAP_SIZE][MAP_SIZE];
 
@@ -67,7 +66,7 @@ public class Solution {
                 if (val > 0) {
                 	int r = i + MAP_CENTER;
                     int c = j + MAP_CENTER;
-                    map[r][c] = val; // map에는 생명력을 저장하여 점유 표시
+                    map[r][c] = val; // map에 생명력 저장. 디버깅에 용이함 하하
                     pq.add(new Cell(r, c, val));
                 }
             }
@@ -93,8 +92,11 @@ public class Solution {
         				
         				// 번식 가능한 땅이면
         				if (map[nr][nc] == 0) {
+        					
         					// 번식
         					map[nr][nc] = cell.life;
+        					
+        					// 임시 큐에 추가, 이 while문 밖에서 lazy하게 처리
         					tmp.offer(new Cell(nr, nc, cell.life));
         				}
         			}
