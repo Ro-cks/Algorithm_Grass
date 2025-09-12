@@ -22,16 +22,15 @@ public class Main {
 		while (N >= 0) {
 			if (N % 5 == 0) {
 				answer += N / 5;
-				
-				break;
+                System.out.print(answer);
+                
+				return;
 			}
 			
 			N -= 3;
 			++answer;
 		}
 		
-		answer = N < 0 ? -1 : answer;
-		
-		System.out.print(answer);
+		System.out.print(-1);
 	}
 }
