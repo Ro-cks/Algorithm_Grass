@@ -32,39 +32,22 @@ public class Main {
 	}
 	
 	static void solution() {
-		DFS(0);
+		DFS(0, 0);
 		
 		System.out.print(answer);
 	}
 	
-	static void DFS(int depth) {
-		if (depth == N) {
-			cal();
+	static void DFS(int day, int profit) {
+		if (day >= N) {
+			answer = Math.max(answer, profit);
 			
 			return;
 		}
 		
-		sequence[depth] = true;
-		DFS(depth + 1);
-		sequence[depth] = false;
-		DFS(depth + 1);
-	}
-	
-	static void cal() {
-		int day = 0;
-		int profit = 0;
+		DFS(day + 1, profit);
 		
-		for (int i = 0; i < N; ++i) {
-			if (sequence[i]) {
-				if (i + T[i] > N) continue;
-				if (day + T[i] > N) continue;
-				
-				day += T[i];
-				profit += P[i];
-				i += T[i] - 1;
-			}
+		if (day + T[day] <= N) {
+			DFS(day + T[day], profit + P[day]);
 		}
-		
-		answer = Math.max(answer, profit);
 	}
 }
