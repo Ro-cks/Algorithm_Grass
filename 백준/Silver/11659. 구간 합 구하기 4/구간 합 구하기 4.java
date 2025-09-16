@@ -1,35 +1,49 @@
 import java.io.*;
 import java.util.*;
 
-public class Main { // https://www.acmicpc.net/problem/11659
-	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	public static StringTokenizer st;
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringBuilder sb = new StringBuilder();
+	static StringTokenizer st;
+	
+	static int N;
+	static int M;
+	static int[] nums;
+	static int[] S;
 	
 	public static void main(String[] args) throws IOException {
-		st = new StringTokenizer(br.readLine());
+		init();
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		solution();
+	}
+	
+	static void init() throws IOException {
+		st = new StringTokenizer(br.readLine().trim());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		nums = new int[N];
+		S = new int[N + 1];
 		
-		int[] nums = new int[N + 1];
-		int[] prefix = new int[N + 1];
-		
-		st = new StringTokenizer(br.readLine());
-		for (int i = 1; i <= N; ++i) {
+		st = new StringTokenizer(br.readLine().trim());
+		for (int i = 0; i < N; ++i) {
 			nums[i] = Integer.parseInt(st.nextToken());
-			prefix[i] = prefix[i - 1] + nums[i];
 		}
 		
-		for (int i = 0; i < M; ++i) {
-			System.out.println(addArea(prefix));
+		for (int i = 1; i <= N; ++i) {
+			S[i] = S[i - 1] + nums[i - 1];
 		}
 	}
 	
-	public static int addArea(int[] prefix) throws IOException {
-		st = new StringTokenizer(br.readLine());
-		int start = Integer.parseInt(st.nextToken());
-		int end = Integer.parseInt(st.nextToken());
+	static void solution() throws IOException {
+		for (int i = 0; i < M; ++i) {
+			st = new StringTokenizer(br.readLine().trim());
+			
+			int start = Integer.parseInt(st.nextToken()) - 1;
+			int end = Integer.parseInt(st.nextToken());
+			
+			sb.append(S[end] - S[start]).append('\n');
+		}
 		
-		return prefix[end] - prefix[start - 1];
+		System.out.print(sb);
 	}
 }
