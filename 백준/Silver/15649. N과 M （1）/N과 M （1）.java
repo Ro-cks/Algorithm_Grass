@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main { // https://www.acmicpc.net/problem/15649
+public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
 	static StringTokenizer st;
@@ -12,21 +12,29 @@ public class Main { // https://www.acmicpc.net/problem/15649
 	static boolean[] visited;
 	
 	public static void main(String[] args) throws IOException {
-		st = new StringTokenizer(br.readLine());
+		init();
+		
+		solution();
+	}
+	
+	static void init() throws IOException {
+		st = new StringTokenizer(br.readLine().trim());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		sequence = new int[M];
 		visited = new boolean[N + 1];
-		
+	}
+	
+	static void solution() {
 		dfs(0);
 		
 		System.out.print(sb);
 	}
 	
-	public static void dfs(int depth) {
+	static void dfs(int depth) {
 		if (depth == M) {
-			for (int num : sequence) {
-				sb.append(num).append(' ');
+			for (int i = 0; i < M; ++i) {
+				sb.append(sequence[i]).append(' ');
 			}
 			sb.append('\n');
 			
@@ -39,7 +47,6 @@ public class Main { // https://www.acmicpc.net/problem/15649
 				sequence[depth] = i;
 				dfs(depth + 1);
 				visited[i] = false;
-				sequence[depth] = 0;
 			}
 		}
 	}
