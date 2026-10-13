@@ -10,7 +10,7 @@ class Solution {
     }
 
     private void dfs(String curr, String target) {
-        
+        if (answer != 0) return;
         
         if (!curr.isEmpty()) {
             count++;
