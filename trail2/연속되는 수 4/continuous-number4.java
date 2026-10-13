@@ -13,12 +13,8 @@ public class Main {
         for (int n = 0; n < N; ++n) {
             int input = Integer.parseInt(br.readLine());
 
-            if (n > 0) {
-                if (preInput < input) {
-                    ++count;
-                } else {
-                    count = 1;
-                }
+            if (n > 0 && preInput < input) {
+                ++count;
             } else {
                 count = 1;
             }
