@@ -17,14 +17,10 @@ public class Main {
         }
 
         for (int i = 0; i < inputs.length; ++i) {
-            if (i > 0 && inputs[i] > T) {
+            if (inputs[i] > T) {
                 ++count;
             } else {
-                if (inputs[i] > T) {
-                    count = 1;
-                } else {
-                    count = 0;
-                }
+                count = 0;
             }
 
             answer = Math.max(answer, count);
