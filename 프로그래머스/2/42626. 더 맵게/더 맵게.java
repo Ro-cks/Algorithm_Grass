@@ -9,18 +9,14 @@ class Solution {
         }
         
         int answer = 0;
-        int foodCount = scoville.length;
-        while (foodCount > 1) {
-            int min = pq.poll();
-            if (min >= K) break;
+        while (pq.peek() < K) {
+            if (pq.size() < 2) return -1;
             
-            int nextMin = pq.poll();
-            pq.offer(min + (nextMin * 2));
-            --foodCount;
-            ++answer;
+            int first = pq.poll();
+            int second = pq.poll();
+            pq.offer(first + second * 2);
+            answer++;
         }
-        
-        if (pq.peek() < K) return -1;
         
         return answer;
     }
