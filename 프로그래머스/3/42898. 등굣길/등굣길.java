@@ -13,13 +13,9 @@ class Solution {
                 if (i == 0 && j == 0) continue;
                 if (isPuddle[i][j]) continue;
                 
-                if (i == 0 && j != 0) {
-                    dp[i][j] = dp[i][j - 1];
-                } else if (i != 0 && j == 0) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = (dp[i - 1][j] + dp[i][j - 1]) % MOD;
-                }
+                int fromLeft = (i > 0) ? dp[i - 1][j] : 0;
+                int fromUp = (j > 0) ? dp[i][j - 1] : 0;
+                dp[i][j] = (fromLeft + fromUp) % MOD;
             }
         }
         
