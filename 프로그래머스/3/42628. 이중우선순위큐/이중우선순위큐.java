@@ -12,23 +12,15 @@ class Solution {
             
             if (cmd.equals("I")) {
                 map.put(value, map.getOrDefault(value, 0) + 1);
-            } else {
-                if (map.isEmpty()) continue;
-                
-                if (value == 1) {
-                    if (map.get(map.lastKey()) > 1) {
-                        map.put(map.lastKey(), map.get(map.lastKey()) - 1);
-                    } else {
-                        map.remove(map.lastKey());
-                    }
-                } else {
-                    if (map.get(map.firstKey()) > 1) {
-                        map.put(map.firstKey(), map.get(map.firstKey()) - 1);
-                    } else {
-                        map.remove(map.firstKey());
-                    }
-                }
+                continue;
             }
+            
+            if (map.isEmpty()) continue;
+            
+            int key = (value == 1) ? map.lastKey() : map.firstKey();
+            int count = map.get(key);
+            if (count == 1) map.remove(key);
+            else map.put(key, value - 1);
         }
         
         if (map.size() == 0) {
