@@ -59,6 +59,7 @@ public class Main {
         pq.offer(new Edge(A, 0));
         while (!pq.isEmpty()) {
             Edge curr = pq.poll();
+            if (curr.cost > dist[curr.to]) continue;
 
             for (Edge next : graph[curr.to]) {
                 if (dist[next.to] > dist[curr.to] + next.cost) {
